@@ -3,15 +3,15 @@
 
 ## Table of Contents
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [Demo](#demo)
-4. [Technologies Used](#technologies-used)
-5. [API Interaction](#api-interaction)
-6. [Local Development Setup](#local-development-setup)
-7. [Deployment](#deployment)
-8. [Challenges and Solutions](#challenges-and-solutions)
-9. [Credits and Acknowledgments](#credits-and-acknowledgments)
+1. Overview
+2. Features
+3. Demo
+4. Technologies Used
+5. API Interaction
+6. Local Development Setup
+7. Deployment
+8. Challenges and Solutions
+9. Credits and Acknowledgments
 
 ---
 
@@ -52,21 +52,21 @@ The Movie Recommender App is a web application designed to help users discover m
 
 ## 3. Demo
 
-[**Demo Video**](#) *(Add your demo video link here)*
+[**Demo Video**](https://youtu.be/7IxFDbY3gEY)
 
-[**Live Application**](#) *(Add your live deployment link here, if applicable)*
+[**Live Application**](https://www.yourgift.tech)
 
 ## 4. Technologies Used
 
 - **Frontend:** HTML, CSS, JavaScript
 - **API:** IMDb Top 250 Movies API from [RapidAPI](https://rapidapi.com/)
-- **Deployment:** *(Mention deployment platform if applicable, e.g., GitHub Pages, Netlify, etc.)*
+- **Deployment:** Deployed on nginx and haproxy for load balancing
 
 ## 5. API Interaction
 
 This application integrates with the **IMDb Top 250 Movies API** from RapidAPI to fetch and display movie data, including titles, posters, release years, genres, and ratings.
 
-API Documentation: [IMDb Top 250 Movies API](https://rapidapi.com/imdb236/api/imdb-top-250-movies)
+API Documentation: [IMDb Top 250 Movies API](https://rapidapi.com/octopusteam-octopusteam-default/api/imdb236/playground/apiendpoint_94bcc49a-fd14-4b7b-bc2d-4c3b97f41613)
 
 ## 6. Local Development Setup
 
@@ -77,44 +77,37 @@ git clone [YOUR REPOSITORY URL HERE]
 cd [YOUR REPOSITORY DIRECTORY NAME]
 ```
 
-### Step 2: Configure API Key
-
-Create a file named `config.js` in the root directory and add the following:
-
-```js
-const RAPIDAPI_KEY = 'YOUR_RAPIDAPI_KEY';
-const RAPIDAPI_HOST = 'imdb236.p.rapidapi.com';
-```
-
-### Step 3: Open the Project
+### Step 2: Open the Project
 
 Since this is a front-end application, simply open `index.html` in a browser.
 
 ## 7. Deployment
 
-*(Describe your deployment process. Example: GitHub Pages, Netlify, etc.)*
+### 7.1 Prerequisites
 
-### If using **GitHub Pages**:
+- Two web servers:
+  - **Web-01** and **Web-02** (where nginx is installed, and I configured `/etc/nginx/sites_available/default`, this file is where I hosted my application. I placed all my files used to make the application, including HTML, CSS, and JS, inside `/var/www/html` so that they can be accessed by visiting the IP address).
+  
+- **Load balancer:**
+  - Through **lb-01** (where haproxy is installed to distribute the requests across those two servers). This was done by configuring the haproxy config file (`/etc/haproxy/haproxy.cfg`), so you can access it by linking to the IP address of `lb-01`.
 
-1. Ensure your project is in a public GitHub repository.
-2. Go to your repository's **Settings**.
-3. Navigate to **Pages**.
-4. Select the branch (e.g., `main`) and deploy.
-5. Your site will be available at `https://your-github-username.github.io/your-repository-name`.
+### 7.2 Domain Name
+
+- A domain was created using **DotTech domain** and linked to the IP address. Now, if you visit my domain, you will get the same result as visiting via the IP address.
+
+### 7.3 SSL Certificate
+
+- From **lb-01**, I created a certificate using **certbot**, issued by **Letsencrypt** and signed by it, ensuring the connection is secure.
 
 ## 8. Challenges and Solutions
 
-### 8.1 API Rate Limiting
+### API Rate Limiting
 
 - **Issue:** Free-tier API plans have rate limits.
 - **Solution:** Implemented local caching and optimized API requests.
 
 ## 9. Credits and Acknowledgments
 
-- **IMDb Top 250 Movies API** - Provided by [RapidAPI](https://rapidapi.com/imdb236/api/imdb-top-250-movies)
+- **IMDb Top 250 Movies API** - Provided by [RapidAPI](https://rapidapi.com/octopusteam-octopusteam-default/api/imdb236/playground/apiendpoint_94bcc49a-fd14-4b7b-bc2d-4c3b97f41613)
 - **CSS Reset:** [Meyer Reset CSS](https://cdnjs.com)
-
----
-
-> **Note:** Replace placeholders (e.g., `[YOUR REPOSITORY URL HERE]`, `[YOUR LIVE APPLICATION LINK HERE]`) with actual values before deployment.
 
